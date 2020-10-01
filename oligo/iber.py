@@ -69,6 +69,17 @@ class Iber:
         json_response = response.json()
         return json_response['valMagnitud']
 
+    def powermeter(self):
+        """Returns your current power meter read"""
+        self.__check_session()
+        response = self.__session.request("GET", self.__watthourmeter_url, headers=self.__headers)
+        if response.status_code != 200:
+            raise ResponseException
+        if not response.text:
+            raise NoResponseException
+        json_response = response.json()
+        return json_response['valLecturaContador']
+
     def icpstatus(self):
         """Returns the status of your ICP."""
         self.__check_session()
